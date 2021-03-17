@@ -147,12 +147,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gameWindow.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="worldWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gameWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="worldWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\lib\glew-2.2.0\bin\Release\x64\glew32.dll">
