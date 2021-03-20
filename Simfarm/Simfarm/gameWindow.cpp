@@ -93,7 +93,7 @@ bool gameWindow::Run()
 		//	cameraPosition -= right * delta * _speed;
 		//}
 
-		OnUpdate(delta);
+		OnUpdate(delta, projectionMatrix, view);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

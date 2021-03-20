@@ -17,10 +17,10 @@ public:
 	bool Clear();
 
 protected:
-	virtual void OnLoad() {}
-	virtual void OnUpdate(float delta) {}
-	virtual void OnDraw(float delta) {}
-	virtual void OnUnload() {}
+	virtual void OnLoad() = 0;
+	virtual void OnUpdate(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view) = 0;
+	virtual void OnDraw(float delta) = 0;
+	virtual void OnUnload() = 0;
 
 	GLFWwindow* getWindow()
 	{

@@ -147,15 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Drawable.h" />
     <ClInclude Include="gameWindow.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="WorldMap.h" />
     <ClInclude Include="worldWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WorldMap.cpp" />
     <ClCompile Include="worldWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
