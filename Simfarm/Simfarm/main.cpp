@@ -8,7 +8,7 @@
 
 int main(void)
 {
-	worldWindow window;
+	WorldWindow window;
 	if (!window.Initialize())
 	{
 		return -1;

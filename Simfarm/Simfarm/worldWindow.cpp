@@ -1,30 +1,30 @@
 #include "worldWindow.h"
 
-worldWindow::worldWindow()
+WorldWindow::WorldWindow()
 {
 	/*_worldSize = glm::vec2{ 2,4 };
 	_world = std::vector<Tile>(_worldSize.x* _worldSize.y);*/
 	_map = new WorldMap;
 }
 
-void worldWindow::OnLoad()
+void WorldWindow::OnLoad()
 {
 	_map->LoadBuffers();
 	fprintf(stdout, "OnLoad");
 }
 
 
-void worldWindow::OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view)
+void WorldWindow::OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view)
 {
 	_map->Update(diff, projectionMatrix, view);
 }
 
-void worldWindow::OnDraw(float diff)
+void WorldWindow::OnDraw(float diff)
 {	
 	_map->Draw();
 }
 
-void worldWindow::OnUnload()
+void WorldWindow::OnUnload()
 {
 	_map->Release();
 	delete _map;

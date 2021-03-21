@@ -2,12 +2,14 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "utils.h"
+#include "vertexBuffer.h"
+#include "indexBuffer.h"
 
 class Drawable
 {
 protected:
 	virtual unsigned int LoadShader() = 0;
-	virtual void LoadVertexBuffer() = 0;
+	virtual unsigned int LoadVertexBuffer() = 0;
 	virtual void LoadIndexBuffer() = 0;
 	virtual void ShaderBeforeDraw() = 0;
 	virtual void Update(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view) = 0;
@@ -15,18 +17,14 @@ protected:
 public:
 	void LoadBuffers()
 	{
-		glGenVertexArrays(1, &_vertexArrayID);
-		glBindVertexArray(_vertexArrayID);
-
+		_vertexBuffer = new VertexBuffer;
+		_indexBuffer = new IndexBuffer;
 		_shaderProgramID = LoadShader();
 
-		glGenBuffers(1, &_vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
-		LoadVertexBuffer();
-		glEnableVertexAttribArray(0);
+		_vertexBuffer->Create();
+		_vertexBuffer->SetCount(LoadVertexBuffer());
 
-		glGenBuffers(1, &_indicesBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesBuffer);
+		_indexBuffer->Create();
 		LoadIndexBuffer();
 
 		Unbind();
@@ -34,9 +32,7 @@ public:
 
 	void Release()
 	{
-		glDeleteBuffers(1, &_vertexbuffer);
-		glDeleteBuffers(1, &_indicesBuffer);
-		glDeleteVertexArrays(1, &_vertexArrayID);
+		_vertexBuffer->Release();
 		if (_shaderProgramID != 0) 
 		{
 			glDeleteProgram(_shaderProgramID);
@@ -51,10 +47,9 @@ public:
 			ShaderBeforeDraw();
 		}
 
-		glBindVertexArray(_vertexArrayID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesBuffer);
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		_vertexBuffer->Bind();
+		_indexBuffer->Bind();
+		glDrawElements(GL_LINE_LOOP, _vertexBuffer->GetCount(), GL_UNSIGNED_INT, 0);
 		
 		Unbind();
 	}
@@ -62,15 +57,13 @@ public:
 private:
 	void Unbind()
 	{
-		glBindVertexArray(0);
+		_vertexBuffer->Unbind();
+		_indexBuffer->Unbind();
 		glUseProgram(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 private:
-	unsigned int _vertexbuffer;
-	unsigned int _indicesBuffer;
-	unsigned int _vertexArrayID;
 	unsigned int _shaderProgramID;
+	VertexBuffer* _vertexBuffer;
+	IndexBuffer* _indexBuffer;
 };

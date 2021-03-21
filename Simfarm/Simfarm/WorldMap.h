@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable.h"
+#include "drawable.h"
 
 class WorldMap : public Drawable
 {
@@ -9,7 +9,7 @@ private:
 
 	// Inherited via Drawable
 	virtual unsigned int LoadShader() override;
-	virtual void LoadVertexBuffer() override;
+	virtual unsigned int LoadVertexBuffer() override;
 	virtual void LoadIndexBuffer() override;
 	virtual void ShaderBeforeDraw() override;
 

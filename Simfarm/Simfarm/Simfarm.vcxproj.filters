@@ -30,10 +30,16 @@
     <ClInclude Include="worldWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Drawable.h">
+    <ClInclude Include="vertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldMap.h">
+    <ClInclude Include="indexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="worldMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,7 +56,7 @@
     <ClCompile Include="worldWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldMap.cpp">
+    <ClCompile Include="worldMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

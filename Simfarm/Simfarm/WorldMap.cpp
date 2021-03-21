@@ -1,4 +1,4 @@
-#include "WorldMap.h"
+#include "worldMap.h"
 
 unsigned int WorldMap::LoadShader()
 {
@@ -7,7 +7,7 @@ unsigned int WorldMap::LoadShader()
 	return shaderId;
 }
 
-void WorldMap::LoadVertexBuffer()
+unsigned int WorldMap::LoadVertexBuffer()
 {
 	float g_vertex_buffer_data[] = {
 		-0.5f, -0.5f, 0.0f,
@@ -18,6 +18,9 @@ void WorldMap::LoadVertexBuffer()
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	return 6;
 }
 
 void WorldMap::Update(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view)

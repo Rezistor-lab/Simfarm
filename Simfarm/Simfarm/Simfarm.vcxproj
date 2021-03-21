@@ -147,18 +147,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="drawable.h" />
     <ClInclude Include="gameWindow.h" />
+    <ClInclude Include="indexBuffer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="utils.h" />
-    <ClInclude Include="WorldMap.h" />
+    <ClInclude Include="vertexBuffer.h" />
+    <ClInclude Include="worldMap.h" />
     <ClInclude Include="worldWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="WorldMap.cpp" />
+    <ClCompile Include="worldMap.cpp" />
     <ClCompile Include="worldWindow.cpp" />
   </ItemGroup>
   <ItemGroup>

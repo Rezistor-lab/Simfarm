@@ -1,11 +1,11 @@
 #pragma once
 #include "gameWindow.h"
-#include "WorldMap.h"
+#include "worldMap.h"
 
-class worldWindow : public gameWindow
+class WorldWindow : public gameWindow
 {
 public:
-	worldWindow();
+	WorldWindow();
 
 private:
 	void OnLoad();
