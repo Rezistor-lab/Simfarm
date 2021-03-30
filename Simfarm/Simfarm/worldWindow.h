@@ -1,19 +1,20 @@
 #pragma once
-#include "gameWindow.h"
-#include "worldMap.h"
+#include "GameWindow.h"
+#include "WorldMap.h"
 
-class WorldWindow : public gameWindow
+class WorldWindow : public GameWindow
 {
 public:
 	WorldWindow();
+	~WorldWindow();
 
 private:
 	void OnLoad();
 	void OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view);
 	void OnDraw(float diff);
-	void OnUnload();
 
 private:
 
-	WorldMap* _map;
+	WorldMap* m_map{ nullptr };
+	Renderer* m_renderer;
 };

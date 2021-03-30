@@ -147,21 +147,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="drawable.h" />
-    <ClInclude Include="gameWindow.h" />
-    <ClInclude Include="indexBuffer.h" />
+    <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="src\vendor\stb_image.h" />
     <ClInclude Include="utils.h" />
-    <ClInclude Include="vertexBuffer.h" />
-    <ClInclude Include="worldMap.h" />
-    <ClInclude Include="worldWindow.h" />
+    <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="WorldMap.h" />
+    <ClInclude Include="WorldWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gameWindow.cpp" />
+    <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="src\vendor\stb_image.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="worldMap.cpp" />
-    <ClCompile Include="worldWindow.cpp" />
+    <ClCompile Include="WorldMap.cpp" />
+    <ClCompile Include="WorldWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\lib\glew-2.2.0\bin\Release\x64\glew32.dll">

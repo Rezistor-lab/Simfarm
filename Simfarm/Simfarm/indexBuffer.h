@@ -1,37 +1,38 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 class IndexBuffer
 {
 public:
-	void Create()
+	IndexBuffer(const std::vector<unsigned int>& indices)
 	{
-		glGenBuffers(1, &_indicesBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesBuffer);
+		glGenBuffers(1, &m_indicesBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indicesBuffer);
+
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+		m_indexCount = indices.size();
 	}
-	
-	void Bind()
+	~IndexBuffer()
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesBuffer);
+		glDeleteBuffers(1, &m_indicesBuffer);
 	}
 
-	void Unbind()
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
+	inline unsigned int GetCount() const { return m_indexCount; }
 
-	void Release()
+	void Bind() const
 	{
-		glDeleteBuffers(1, &_indicesBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indicesBuffer);
 	}
 
 	const unsigned int& GetId()
 	{
-		return _indicesBuffer;
+		return m_indicesBuffer;
 	}
 
 private:
-	unsigned int _indicesBuffer;
+	unsigned int m_indicesBuffer;
+	unsigned int m_indexCount;
 };
 

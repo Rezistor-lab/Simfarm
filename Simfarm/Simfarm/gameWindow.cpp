@@ -1,6 +1,6 @@
-#include "gameWindow.h"
+#include "GameWindow.h"
 
-bool gameWindow::Initialize()
+bool GameWindow::Initialize()
 {
 	if (!glfwInit())
 	{
@@ -51,7 +51,7 @@ bool gameWindow::Initialize()
 	return true;
 }
 
-bool gameWindow::Run()
+bool GameWindow::Run()
 {
 	lastTime = glfwGetTime();
 	double frameTime = 0;
@@ -107,11 +107,10 @@ bool gameWindow::Run()
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(window) == 0);
 
-	OnUnload();
 	return true;
 }
 
-bool gameWindow::Clear()
+bool GameWindow::Clear()
 {
 	glfwTerminate();
 	return false;

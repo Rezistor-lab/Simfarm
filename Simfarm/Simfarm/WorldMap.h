@@ -1,18 +1,26 @@
 #pragma once
-#include "drawable.h"
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include "utils.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "Renderer.h"
 
-class WorldMap : public Drawable
+class WorldMap
 {
-private:
-	unsigned int _mvpMatrixID{ 0 };
-	glm::mat4 _mvp;
-
-	// Inherited via Drawable
-	virtual unsigned int LoadShader() override;
-	virtual unsigned int LoadVertexBuffer() override;
-	virtual void LoadIndexBuffer() override;
-	virtual void ShaderBeforeDraw() override;
-
 public:
-	virtual void Update(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view) override;
+	WorldMap(Renderer* renderer);
+	~WorldMap();
+
+	void Update(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view);
+	void Draw();
+
+private:
+	unsigned int m_mvpMatrixID{ 0 };
+	glm::mat4 m_mvp;
+
+	VertexBuffer* m_vertexBuffer;
+	IndexBuffer* m_indexBuffer;
+	Shader* m_shader;
+	Renderer* m_renderer;
 };

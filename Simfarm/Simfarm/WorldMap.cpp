@@ -1,45 +1,46 @@
-#include "worldMap.h"
+#include "WorldMap.h"
 
-unsigned int WorldMap::LoadShader()
+WorldMap::WorldMap(Renderer* renderer)
 {
-	unsigned int shaderId = LoadShaders("shaders\\SimpleVertexShader.vertexshader", "shaders\\SimpleFragmentShader.fragmentshader");
-	_mvpMatrixID = glGetUniformLocation(shaderId, "MVP");
-	return shaderId;
-}
-
-unsigned int WorldMap::LoadVertexBuffer()
-{
-	float g_vertex_buffer_data[] = {
+	std::vector<float> vb{
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.5f,  0.5f, 0.0f,
 		-0.5f,  0.5f, 0.0f
 	};
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	m_vertexBuffer = new VertexBuffer(vb.data(), vb.size()*sizeof(float));
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 	glEnableVertexAttribArray(0);
 
-	return 6;
+	m_indexBuffer = new IndexBuffer({
+		0,1,2,
+		2,3,0
+	});
+	m_shader = new Shader("shaders\\SimpleVertexShader.vertexshader", "shaders\\SimpleFragmentShader.fragmentshader");
+	m_renderer = renderer;
+}
+
+WorldMap::~WorldMap()
+{
+	if (m_vertexBuffer) {
+		delete m_vertexBuffer;
+	}
+	if (m_indexBuffer) {
+		delete m_indexBuffer;
+	}
+	if (m_shader) {
+		delete m_shader;
+	}
 }
 
 void WorldMap::Update(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view)
 {
-	_mvp = projectionMatrix * view * glm::mat4(1.0f);
+	m_mvp = projectionMatrix * view * glm::mat4(1.0f);
 }
 
-void WorldMap::LoadIndexBuffer()
+void WorldMap::Draw()
 {
-	unsigned int indices[] = {
-		0,1,2,
-		2,3,0
-	};
-
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-}
-
-void WorldMap::ShaderBeforeDraw()
-{
-	glUniformMatrix4fv(_mvpMatrixID, 1, GL_FALSE, &_mvp[0][0]);
+	glUniformMatrix4fv(m_mvpMatrixID, 1, GL_FALSE, &m_mvp[0][0]);
+	m_renderer->Render(m_vertexBuffer, m_indexBuffer, m_shader);
 }
 
