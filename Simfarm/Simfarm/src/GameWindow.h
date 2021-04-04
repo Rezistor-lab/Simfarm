@@ -8,13 +8,13 @@
 
 #include "utils.h"
 
-
 class GameWindow
 {
 public:
 	bool Initialize();
 	bool Run();
 	bool Clear();
+	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
 protected:
 	virtual void OnLoad() = 0;
@@ -39,6 +39,11 @@ private:
 
 	double lastTime;
 	int nbFrames = 0;
-	float _speed = 3.0f;
+	float _moveSpeed = 3.0f;
+	float _zoomSpeed = 100.0f;
+	float _scrollOffset = 0.0f;
+	glm::vec3 m_vertical{ 0, 1, 0 };
+	glm::vec3 m_horizontal{ 1, 0, 0 };
+	glm::vec3 m_scroll{ 0,0,1 };
 };
 

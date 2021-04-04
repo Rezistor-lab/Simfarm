@@ -5,6 +5,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Renderer.h"
+#include "Texture.h"
 
 class WorldMap
 {
@@ -23,4 +24,5 @@ private:
 	IndexBuffer* m_indexBuffer;
 	Shader* m_shader;
 	Renderer* m_renderer;
+	Texture* m_texture;
 };

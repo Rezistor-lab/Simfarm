@@ -1,5 +1,10 @@
 #include "GameWindow.h"
 
+GameWindow* _gw;
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+	_gw->ScrollCallback(window, xoffset, yoffset);
+}
+
 bool GameWindow::Initialize()
 {
 	if (!glfwInit())
@@ -23,8 +28,11 @@ bool GameWindow::Initialize()
 		return false;
 	}
 	glfwMakeContextCurrent(window);
+
+	std::cout << glGetString(GL_VERSION) << std::endl;
+
 	glfwSwapInterval(1);
-	cameraPosition = glm::vec3(0, 0, 3);
+	cameraPosition = glm::vec3(0, 0, 40);
 	cameraTarget = glm::vec3(0, 0, 0);
 	up = glm::vec3(0, 1, 0);
 
@@ -42,6 +50,8 @@ bool GameWindow::Initialize()
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	glfwSetScrollCallback(window, scroll_callback);
+	_gw = this;
 
 	OnLoad();
 
@@ -49,6 +59,11 @@ bool GameWindow::Initialize()
 	glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
 
 	return true;
+}
+
+void GameWindow::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	_scrollOffset += yoffset;
 }
 
 bool GameWindow::Run()
@@ -74,30 +89,47 @@ bool GameWindow::Run()
 		}
 		delta = float(currentTime - lastTime);
 		lastTime = currentTime;
-		view = glm::lookAt(cameraPosition, cameraTarget, up);
 
-		//// Move forward
-		//if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		//	cameraPosition += direction * delta * _speed;
-		//}
-		//// Move backward
-		//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		//	cameraPosition -= direction * delta * _speed;
-		//}
-		//// Strafe right
-		//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-		//	cameraPosition += right * delta * _speed;
-		//}
-		//// Strafe left
-		//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		//	cameraPosition -= right * delta * _speed;
-		//}
+		// UP
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			cameraPosition += m_vertical * delta * _moveSpeed;
+			cameraTarget += m_vertical * delta * _moveSpeed;
+		}
+		// DOWN
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			cameraPosition -= m_vertical * delta * _moveSpeed;
+			cameraTarget -= m_vertical * delta * _moveSpeed;
+		}
+		// RIGHT
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			cameraPosition += m_horizontal * delta * _moveSpeed;
+			cameraTarget += m_horizontal * delta * _moveSpeed;
+		}
+		// LEFT
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+			cameraPosition -= m_horizontal * delta * _moveSpeed;
+			cameraTarget -= m_horizontal * delta * _moveSpeed;
+		}
+		if (_scrollOffset != 0.0f)
+		{
+			cameraPosition += m_scroll * delta * _scrollOffset * _zoomSpeed;
+			_scrollOffset = 0.0f;
+		}
+		
+
+		view = glm::lookAt(cameraPosition, cameraTarget, up);
 
 		OnUpdate(delta, projectionMatrix, view);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		while (glGetError() != GL_NO_ERROR);
+
 		OnDraw(delta);
+
+		while (unsigned int error = glGetError()) {
+			std::cout << "OpenGL error:" << error << std::endl;
+		}
 
 		// Swap buffers
 		glfwSwapBuffers(window);

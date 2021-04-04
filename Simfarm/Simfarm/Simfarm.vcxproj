@@ -147,25 +147,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameWindow.h" />
-    <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="src\GameWindow.h" />
+    <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\vendor\stb_image.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="VertexBuffer.h" />
-    <ClInclude Include="WorldMap.h" />
-    <ClInclude Include="WorldWindow.h" />
+    <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\VertexBuffer.h" />
+    <ClInclude Include="src\WorldMap.h" />
+    <ClInclude Include="src\WorldWindow.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="src\GameWindow.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\vendor\stb_image.cpp" />
-    <ClCompile Include="utils.cpp" />
-    <ClCompile Include="WorldMap.cpp" />
-    <ClCompile Include="WorldWindow.cpp" />
+    <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\WorldMap.cpp" />
+    <ClCompile Include="src\WorldWindow.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\lib\glew-2.2.0\bin\Release\x64\glew32.dll">
@@ -176,14 +178,20 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
-    <None Include="shaders\SimpleFragmentShader.fragmentshader">
+    <None Include="res\shaders\SimpleFragmentShader.fragmentshader">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
-    <None Include="shaders\SimpleVertexShader.vertexshader">
+    <None Include="res\shaders\SimpleVertexShader.vertexshader">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\tilemap.png">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
