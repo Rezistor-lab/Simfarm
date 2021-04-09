@@ -10,7 +10,7 @@ public:
 
 private:
 	void OnLoad();
-	void OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view);
+	void OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view, const float& zoom);
 	void OnDraw(float diff);
 
 private:

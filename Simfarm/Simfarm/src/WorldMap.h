@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "utils.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -13,7 +14,7 @@ public:
 	WorldMap(Renderer* renderer);
 	~WorldMap();
 
-	void Update(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view);
+	void Update(float delta, const glm::mat4& projectionMatrix, const glm::mat4& view, const float& zoom);
 	void Draw();
 
 private:

@@ -32,12 +32,12 @@ bool GameWindow::Initialize()
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	glfwSwapInterval(1);
-	cameraPosition = glm::vec3(0, 0, 40);
-	cameraTarget = glm::vec3(0, 0, 0);
-	up = glm::vec3(0, 1, 0);
+	cameraPosition = glm::vec3(0.0f, 0.0f, -1.0f);
+	cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	//projectionMatrix = glm::ortho(-(1024.0f/2.0f), (1024.0f / 2.0f), -(768.0f / 2.0f), (768.0f / 2.0f), 0.1f, 100.0f); // In world coordinates 
-	projectionMatrix = glm::perspective(glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f);
+	projectionMatrix = glm::ortho(-(1024.0f/2.0f), (1024.0f / 2.0f), -(768.0f / 2.0f), (768.0f / 2.0f), -1.0f, 100.0f); // In world coordinates 
+	//projectionMatrix = glm::perspective(glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f);
 
 	// Initialize GLEW
 	glewExperimental = true; // Needed for core profile
@@ -56,8 +56,7 @@ bool GameWindow::Initialize()
 	OnLoad();
 
 	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
-
+	glClearColor(0.2f, 0.2f, 0.3f, 0.0f);
 	return true;
 }
 
@@ -112,21 +111,22 @@ bool GameWindow::Run()
 		}
 		if (_scrollOffset != 0.0f)
 		{
-			cameraPosition += m_scroll * delta * _scrollOffset * _zoomSpeed;
+			_zoom += _scrollOffset > 0 ? _zoomStep : -_zoomStep;
+			if (_zoom < _zoomStep) { _zoom = _zoomStep; }
+			else if (_zoom > _zoomStep * 8) { _zoom = _zoomStep * 8; }
 			_scrollOffset = 0.0f;
 		}
 		
 
 		view = glm::lookAt(cameraPosition, cameraTarget, up);
 
-		OnUpdate(delta, projectionMatrix, view);
+		OnUpdate(delta, projectionMatrix, view, _zoom);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		while (glGetError() != GL_NO_ERROR);
 
 		OnDraw(delta);
-
 		while (unsigned int error = glGetError()) {
 			std::cout << "OpenGL error:" << error << std::endl;
 		}

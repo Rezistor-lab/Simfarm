@@ -2,8 +2,6 @@
 
 WorldWindow::WorldWindow()
 {
-	/*_worldSize = glm::vec2{ 2,4 };
-	_world = std::vector<Tile>(_worldSize.x* _worldSize.y);*/
 	m_renderer = new Renderer;
 }
 WorldWindow::~WorldWindow()
@@ -23,9 +21,9 @@ void WorldWindow::OnLoad()
 }
 
 
-void WorldWindow::OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view)
+void WorldWindow::OnUpdate(float diff, const glm::mat4& projectionMatrix, const glm::mat4& view, const float& zoom)
 {
-	m_map->Update(diff, projectionMatrix, view);
+	m_map->Update(diff, projectionMatrix, view, zoom);
 }
 
 void WorldWindow::OnDraw(float diff)
