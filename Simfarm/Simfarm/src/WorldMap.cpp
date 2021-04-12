@@ -9,17 +9,16 @@ WorldMap::WorldMap(Renderer* renderer)
 
 	float tw = 1 / 16.0f;
 	float th = 1 / 16.0f;
-	std::vector<float> vb{
+	std::vector<float> position{
 		/*16.0f,16.0f,0.0f, tw,1.0f,//top right
 		16.0f,-16.0f,0.0f, tw,1.0f - th,//bottom right
 		-16.0f,-16.0f,0.0f, 0.0f,1.0f-th,//bottom left
 		-16.0f,16.0f,0.0f, 0.0f,1.0f//top left*/
 
-		16.0f,16.0f,0.0f, 1.0f,1.0f,//top right
-		16.0f,-16.0f,0.0f, 1.0f,0.0f,//bottom right
-		-16.0f,-16.0f,0.0f, 0.0f,0.0f,//bottom left
-		-16.0f,16.0f,0.0f, 0.0f,1.0f//top left
-
+		16.0f,16.0f,0.0f,//top right
+		16.0f,-16.0f,0.0f,//bottom right
+		-16.0f,-16.0f,0.0f,//bottom left
+		-16.0f,16.0f,0.0f//top left
 
 		/*16.0f,16.0f,0.0f, tw,1.0f,//top right
 		16.0f,-16.0f,0.0f, tw,1.0f - th,//bottom right
@@ -31,15 +30,31 @@ WorldMap::WorldMap(Renderer* renderer)
 		//1.0f,  1.0f, 1.0f,1.0f,//0 * tw + tw, 0 * th + th, //top right
 		//-1.0f,  1.0f, 0.0f,1.0f//0 * tw + 0.0f, 0 * th + th //top left
 	};
-	m_vertexBuffer = new VertexBuffer(vb.data(), vb.size()*sizeof(float));
+	std::vector<float> uv {
+		0.0f,1.0f,//top left
+		0.0f,0.0f,//bottom left
+		1.0f,0.0f,//bottom right
+		1.0f,1.0f//top right
+	};
+	std::vector<int> times{
+		0,0,0,0
+	};
+
+	m_vertexBuffer = new VertexBuffer(position.data(), position.size()*sizeof(float));
 	m_vertexBuffer->PushAttrib<float>(3, 1);
+	m_vertexBuffer->BuildAttribs();
+	m_vertexBuffer->NewBuffer(uv.data(), uv.size() * sizeof(float));
 	m_vertexBuffer->PushAttrib<float>(2, 1);
+	m_vertexBuffer->BuildAttribs();
+	m_vertexBuffer->NewBuffer(times.data(), times.size() * sizeof(int));
+	m_vertexBuffer->PushAttrib<int>(1, 1);
 	m_vertexBuffer->BuildAttribs();
 
 	m_indexBuffer = new IndexBuffer({
 		0,1,2,
 		2,0,3
 	});
+
 	m_shader = new Shader("res\\shaders\\SimpleVertexShader.vertexshader", "res\\shaders\\SimpleFragmentShader.fragmentshader");
 	m_shader->CacheUniform("u_mvp");
 	m_shader->CacheUniform("u_Texture");
