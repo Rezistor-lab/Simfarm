@@ -10,10 +10,21 @@ WorldMap::WorldMap(Renderer* renderer)
 	float tw = 1 / 16.0f;
 	float th = 1 / 16.0f;
 	std::vector<float> vb{
+		/*16.0f,16.0f,0.0f, tw,1.0f,//top right
+		16.0f,-16.0f,0.0f, tw,1.0f - th,//bottom right
+		-16.0f,-16.0f,0.0f, 0.0f,1.0f-th,//bottom left
+		-16.0f,16.0f,0.0f, 0.0f,1.0f//top left*/
+
 		16.0f,16.0f,0.0f, 1.0f,1.0f,//top right
 		16.0f,-16.0f,0.0f, 1.0f,0.0f,//bottom right
 		-16.0f,-16.0f,0.0f, 0.0f,0.0f,//bottom left
 		-16.0f,16.0f,0.0f, 0.0f,1.0f//top left
+
+
+		/*16.0f,16.0f,0.0f, tw,1.0f,//top right
+		16.0f,-16.0f,0.0f, tw,1.0f - th,//bottom right
+		-16.0f,-16.0f,0.0f, 0.0f,1.0f - th,//bottom left
+		-16.0f,16.0f,0.0f, 0.0f,1.0f//top left*/
 
 		//-1.0f, -1.0f, 0.0f,0.0f,//0 * tw + 0.0f, 0 * th + 0.0f, //bottom left
 		//1.0f, -1.0f, 1.0f,0.0f,//0 * tw + tw, 0 * th + 0.0f, //bottom right
@@ -21,8 +32,8 @@ WorldMap::WorldMap(Renderer* renderer)
 		//-1.0f,  1.0f, 0.0f,1.0f//0 * tw + 0.0f, 0 * th + th //top left
 	};
 	m_vertexBuffer = new VertexBuffer(vb.data(), vb.size()*sizeof(float));
-	m_vertexBuffer->PushAttrib<float>(3);
-	m_vertexBuffer->PushAttrib<float>(2);
+	m_vertexBuffer->PushAttrib<float>(3, 1);
+	m_vertexBuffer->PushAttrib<float>(2, 1);
 	m_vertexBuffer->BuildAttribs();
 
 	m_indexBuffer = new IndexBuffer({
@@ -62,6 +73,10 @@ void WorldMap::Draw()
 	m_shader->Bind();
 	glUniformMatrix4fv(m_shader->UnformId("u_mvp"), 1, GL_FALSE, &m_mvp[0][0]);
 	glUniform1i(m_shader->UnformId("u_Texture"), 0);
-	m_renderer->Render(m_vertexBuffer, m_indexBuffer, m_shader);
+	m_vertexBuffer->Bind();
+	m_indexBuffer->Bind();
+	glDrawElements(GL_TRIANGLES, m_indexBuffer->GetCount(), GL_UNSIGNED_INT, 0);
+	
+	//m_renderer->Render(m_vertexBuffer, m_indexBuffer, m_shader);
 }
 

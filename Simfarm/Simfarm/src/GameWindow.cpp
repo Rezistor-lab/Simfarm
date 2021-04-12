@@ -29,7 +29,8 @@ bool GameWindow::Initialize()
 	}
 	glfwMakeContextCurrent(window);
 
-	std::cout << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OpenGL version:" << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OpenGL renderer:" << glGetString(GL_RENDERER) << std::endl;
 
 	glfwSwapInterval(1);
 	cameraPosition = glm::vec3(0.0f, 0.0f, -1.0f);

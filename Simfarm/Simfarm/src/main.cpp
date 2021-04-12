@@ -1,5 +1,11 @@
 #include "main.h"
 
+// Force Nvidia over Intel GPU
+#include <Windows.h>
+extern "C" {
+	_declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+}
+
 int main(void)
 {
 	WorldWindow window;

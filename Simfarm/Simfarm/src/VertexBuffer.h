@@ -36,25 +36,26 @@ public:
 	}
 
 	template<typename T>
-	void PushAttrib(int count)
+	void PushAttrib(int count, unsigned char normalized)
 	{
 		static_assert(false);
 	}
 
 	template<>
-	void PushAttrib<float>(int count)
+	void PushAttrib<float>(int count, unsigned char normalized)
 	{
-		m_elements.push_back({ count, GL_FLOAT, GL_FALSE, sizeof(float) });
+		m_elements.push_back({ count, GL_FLOAT, normalized, sizeof(float) });
 		m_stride += sizeof(float) *count;
 	}
 
 	void BuildAttribs()
 	{
+		Bind();
 		unsigned int offset = 0;
 		for (unsigned int i = 0; i < m_elements.size(); i++) {
 			const auto& el = m_elements[i];
-			glEnableVertexAttribArray(i);
 			glVertexAttribPointer(i, el.count, el.type, el.normalized, m_stride, (const void*)offset);
+			glEnableVertexAttribArray(i);
 			offset += el.count*el.size;
 		}
 	}

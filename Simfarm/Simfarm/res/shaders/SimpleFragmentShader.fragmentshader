@@ -1,15 +1,15 @@
 #version 330 core
 
-in vec2 v_TexCoord;
+in vec3 v_TexCoord;
 
 out vec4 color;
 
-uniform sampler2D u_Texture;
+uniform sampler2DArray u_Texture;
 
 void main()
 {
 	vec4 texColor = texture(u_Texture, v_TexCoord);
 	// Output color = red 
 	//color = vec4(1.0, 0.0, 0.0, 1.0);
-	color = vec4(texColor.r, texColor.g, texColor.b, 0.5);
+	color = texColor;
 }

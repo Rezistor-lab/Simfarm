@@ -3,14 +3,15 @@
 // Input vertex data, different for all executions of this shader.
 layout(location = 0) in vec3 pos;
 layout(location = 1) in vec2 texCoord;
+layout(location = 2) in int layer;
 
-out vec2 v_TexCoord;
+out vec3 v_TexCoord;
 
 uniform mat4 u_mvp;
 
 void main()
 {
     gl_Position =  u_mvp * vec4(pos, 1.0);
-    v_TexCoord = texCoord;
+    v_TexCoord = vec3(texCoord, layer);
 }
 
